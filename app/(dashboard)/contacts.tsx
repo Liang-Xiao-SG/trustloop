@@ -1,9 +1,10 @@
 import { View, Text, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
 import useHelpRequests from '../../hooks/useHelpRequests';
-import HelpRequestCard from '../../components/HelpRequestCard';
+import ContactCard from '../../components/ContactCard';
+import useContacts from '../../hooks/useContacts';
 
-export default function Profile() {
-  const { data, loading, offerHelp } = useHelpRequests();
+export default function contacts() {
+  const { contacts, loading, addContact } = useContacts();
 
   return (
     <View style={styles.container}>
@@ -13,14 +14,11 @@ export default function Profile() {
         <ActivityIndicator size="large" />
       ) : (
         <FlatList
-          data={data}
+          data={contacts}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
-            <HelpRequestCard
-              name={item.name}
-              task={item.task}
-              time={item.time}
-              onHelp={() => offerHelp(item.id)}
+            <ContactCard
+              contact={item}
             />
           )}
           contentContainerStyle={{ paddingBottom: 40 }}
