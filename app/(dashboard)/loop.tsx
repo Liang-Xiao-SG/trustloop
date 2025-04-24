@@ -1,8 +1,8 @@
 import { View, Text, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
 import useHelpRequests from '../../hooks/useHelpRequests';
 import HelpRequestCard from '../../components/HelpRequestCard';
-
-export default function Add() {
+import FloatingPlusButton from '../../components/FloatingPlusButton';
+export default function Loop() {
   const { data, loading, offerHelp } = useHelpRequests();
 
   return (
@@ -26,7 +26,9 @@ export default function Add() {
           contentContainerStyle={{ paddingBottom: 40 }}
         />
       )}
+      <FloatingPlusButton />
     </View>
+
   );
 }
 

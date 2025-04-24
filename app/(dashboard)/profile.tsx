@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, FlatList, ActivityIndicator } from 'react-nativ
 import useHelpRequests from '../../hooks/useHelpRequests';
 import HelpRequestCard from '../../components/HelpRequestCard';
 
-export default function Mine() {
+export default function Profile() {
   const { data, loading, offerHelp } = useHelpRequests();
 
   return (
