@@ -1,0 +1,82 @@
+1. Understanding the Core Concept
+
+TrustLoop aims to be a mobile app facilitating help requests ("favors") within a trusted social network. The key differentiator is the emphasis on relationship paths (e.g., "friend's cousin") rather than anonymous gig work. The MVP focuses on establishing this trust-based ecosystem, allowing favors to circulate, and tracking relationship chains.
+
+2. High-Level Architecture
+
+Given the specified tech stack, the architecture looks like this:
+
+Frontend (React Native + Expo + TypeScript):
+Handles all user interface elements and interactions.
+Uses React Navigation for screen transitions and tab management.
+Interacts with Supabase for data fetching, authentication, and storage.
+Manages application state (potentially using Zustand, Redux Toolkit, or React Context API).
+Integrates Expo Push Notifications for real-time updates.
+Utilizes ShadCN UI components (adapted for React Native) for styling.
+Backend (Supabase):
+Database (PostgreSQL): Stores user data, relationships, favors, and progress, using the schema outlined in the document. The contact_paths table will be crucial and likely populated/updated via database functions or triggers based on changes in the relationships table.
+Authentication: Manages user sign-up, login, and sessions using Supabase Auth.
+Storage: Stores user profile images.
+Database Functions/Triggers: Essential for calculating and maintaining the contact_paths table efficiently using recursive CTEs or similar logic within PostgreSQL.
+3. Key Application Modules & Screens
+
+Based on the MVP features and user flows, we'll need the following core modules and screens:
+
+Authentication Module:
+LoginScreen: Email/password or magic link login.
+SignUpScreen: User registration.
+Main Application (Tab Navigator):
+Favors Tab (FavorFeedScreen):
+Displays a feed of favors visible to the user (direct contacts, 2-hop).
+Each favor item (FavorCard) should clearly show the title, requester, and the relationship path (e.g., "From Alice (Your colleague's sister)").
+Ability to tap into a favor for details.
+My Favors Tab (MyFavorsScreen):
+Lists favors the user has created.
+Lists favors the user has offered to help with or is currently working on.
+Shows the status of each favor.
+Connections Tab (ConnectionsScreen):
+Lists the user's direct contacts.
+Displays the relationship defined for each contact (e.g., "Friend", "Mother").
+Shows the relationship path for contacts added via introduction.
+Provides an action to add new direct contacts (AddContactScreen).
+Potentially shows 2nd-degree connections (as per MVP features).
+Profile Tab (ProfileScreen):
+Displays the user's profile information (name, email, bio, image).
+Allows editing profile details (EditProfileScreen).
+Includes settings like logout.
+Favor Module:
+CreateFavorScreen: A form to input favor title, description, and select visibility (direct contacts, 2-hop).
+FavorDetailScreen: Shows full favor details, requester info, relationship path. Contains actions to "Offer Help" or "Pass On" (suggesting another contact).
+FavorProgressTracking: Components within FavorDetailScreen or MyFavorsScreen to view/update status and notes (favor_progress table).
+Contact Management Module:
+AddContactScreen: Search for existing users (by email/name?) or invite new ones (future feature?). Define the relationship type. Record introducer if applicable.
+ContactDetailScreen: View contact's profile (limited view?) and the relationship path.
+4. User Flow Visualization
+
+Here's a Mermaid diagram illustrating the primary user flows described:
+
+graph TD A[Start App] --> B{User Logged In?}; B -- No --> C[Auth Flow: Login/Sign Up]; B -- Yes --> D[Dashboard (Tabs)]; C --> D; subgraph Dashboard direction LR E[Favors Tab] F[My Favors Tab] G[Connections Tab] H[Profile Tab] end D --> E; D --> F; D --> G; D --> H; D -- Floating Action Button? --> I(Create Favor Screen); E --> J(Favor Feed Screen); J -- Select Favor --> K(Favor Detail Screen); K -- Offer Help --> L{Update Favor Progress}; K -- Pass On --> M{Suggest Contact?}; F --> N(My Favors Screen); N -- Select Favor --> K; G --> O(Connections List Screen); O -- Select Contact --> P(Contact Detail Screen); O -- Add Contact --> Q(Add Contact Screen); H --> R(Profile Screen); R -- Edit --> S(Edit Profile Screen); I -- Submit Favor --> J; L --> N; M --> O; # User might navigate to connections to find someone to pass to Q -- Add --> O;
+5. Next Steps & Confirmation
+
+This plan outlines the core structure and components based on the MVP document.
+
+Does this high-level design align with your vision for the TrustLoop MVP?
+Are there any specific areas you'd like to adjust or elaborate on before proceeding?
+Once we agree on this plan, I can help break down the implementation steps further.
+
+Regarding file cleanup: The environment_details show a typical Expo project structure. Files like HelloWave.tsx, ParallaxScrollView.tsx, and the default React logos in assets/images are likely template placeholders and can probably be removed later during development. We should focus on the core application structure first.
+
+Let me know your thoughts on this design plan.
+
+
+
+
+Okay, I have analyzed the trustloop_mvp_document.md and created a design plan for the application, including the architecture, key modules/screens, and a user flow diagram.
+
+Here's a summary of the proposed plan:
+
+Architecture: React Native frontend (Expo, TypeScript, ShadCN) connecting to a Supabase backend (PostgreSQL, Auth, Storage). Database functions/triggers will handle relationship path calculations.
+Core Modules: Authentication, Main Tab Navigation (Favors, My Favors, Connections, Profile), Favor Management, Contact Management.
+Key Screens: Login/SignUp, FavorFeed, MyFavors, ConnectionsList, Profile, CreateFavor, FavorDetail, AddContact, etc.
+User Flow: A Mermaid diagram outlining the navigation between these screens was provided.
+Now, I need your feedback on this plan before we proceed.

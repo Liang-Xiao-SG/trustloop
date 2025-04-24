@@ -5,6 +5,15 @@
       "expo-router"
     ],
     "name": "trustloop",
-    "slug": "trustloop"
+    "slug": "trustloop",
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "ed746ca5-73e8-48f2-bce7-44750aca3fd2"
+      }
+    },
+    "owner": "illegalplayer1-org"
   }
 }
