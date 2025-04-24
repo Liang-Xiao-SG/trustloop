@@ -1,14 +1,16 @@
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
+import useTasks from '../../hooks/useTasks';
 
 export default function AddTaskScreen() {
   const router = useRouter();
+  const { addTask } = useTasks();
   const [task, setTask] = useState('');
   const [description, setDescription] = useState('');
 
-  const handleSubmit = () => {
-    console.log('New Task:', { task, description });
+  const handleSubmit = async () => {
+    await addTask(task, description);
     router.back();
   };
 
@@ -35,7 +37,7 @@ export default function AddTaskScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 20, backgroundColor: '#fff' },
-  title: { fontSize: 20, fontWeight: 'bold', marginBottom: 20,paddingTop: 40,paddingBottom: 20 },
+  title: { fontSize: 20, fontWeight: 'bold', marginBottom: 20 },
   input: {
     borderWidth: 1,
     borderColor: '#ccc',

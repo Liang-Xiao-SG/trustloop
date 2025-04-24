@@ -2,33 +2,29 @@ import { View, Text, StyleSheet, FlatList, ActivityIndicator } from 'react-nativ
 import useHelpRequests from '../../hooks/useHelpRequests';
 import HelpRequestCard from '../../components/HelpRequestCard';
 import FloatingPlusButton from '../../components/FloatingPlusButton';
+import useTasks from '../../hooks/useTasks';
+import TaskCard from '../../components/TaskCard';
 export default function Loop() {
-  const { data, loading, offerHelp } = useHelpRequests();
+  const {tasks, loading, addTask } = useTasks();
 
   return (
     <View style={styles.container}>
-      <Text style={styles.heading}>🔔 Help Requests from Friends</Text>
+      <Text style={styles.heading}>🔔 Review My Need</Text>
 
       {loading ? (
         <ActivityIndicator size="large" />
       ) : (
         <FlatList
-          data={data}
+          data={tasks}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
-            <HelpRequestCard
-              name={item.name}
-              task={item.task}
-              time={item.time}
-              onHelp={() => offerHelp(item.id)}
-            />
+            <TaskCard task={item} />
           )}
           contentContainerStyle={{ paddingBottom: 40 }}
         />
       )}
       <FloatingPlusButton />
     </View>
-
   );
 }
 
