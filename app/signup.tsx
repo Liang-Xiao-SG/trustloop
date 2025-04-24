@@ -10,6 +10,7 @@ export default function SignUpScreen() {
 
   const handleSubmit = () => {
     console.log('Signing up:', { email, password });
+    router.replace('/dashboard/home');
   };
 
   return (
